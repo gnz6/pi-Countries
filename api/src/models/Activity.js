@@ -8,22 +8,31 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false
     },
-    id:{
-        type: DataTypes.UUID,
-        defaultValue: UUIDV4,
-        allowNull: false,
-        primaryKey: true
-    },
+    // id:{
+    //     type: DataTypes.UUID,
+    //     defaultValue: UUIDV4,
+    //     allowNull: false,
+    //     primaryKey: true
+    // },
     dificulty:{
       type: DataTypes.INTEGER,
+      validate:{
+        min:1,
+        max:5,
+      }
     },
     duration:{
       type: DataTypes.INTEGER,
+      validate:{
+        min:1,
+        max:24,
+      }
     },
     season:{
-      type: DataTypes.ENUM("Summer","Winter", "Fall", "Spring"),
+      type: DataTypes.ENUM("All", "Summer","Winter", "Fall", "Spring"),
+      defaultValue: "All"
     },
   },{
-    timeStamps: false
+    timestamps: false
   });
 };

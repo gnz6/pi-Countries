@@ -11,6 +11,7 @@ module.exports = (sequelize) => {
     id:{
       type: DataTypes.STRING(3),
       allowNull: false,
+      primaryKey: true
 
     },
     flag:{
@@ -29,12 +30,12 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     area:{
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     population: {
       type: DataTypes.INTEGER
     }
   },{
-    timeStamps: false
+    timestamps: false
   });
 };
