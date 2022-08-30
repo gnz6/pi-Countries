@@ -37,6 +37,7 @@ export default function Form(){
         season:"",
         countries:[]
 
+
     })
 
     //handlers
@@ -91,7 +92,11 @@ export default function Form(){
         {!countries[0]?
         <h1>LOADER</h1>
         :
+
+    
         <form onSubmit={handleSubmit}>
+
+            <h2>CREATE</h2>
 
          <div className='formNameContainer'>
             <label className= "labelTitle"> Name:
@@ -103,11 +108,10 @@ export default function Form(){
         <div className='formDifContainer'>
             <label className= "labelTitle"> Select Dificulty(1 - Easier, 5 - Harder):
 
-                <select className='formDificulty' onChange={handleChange}>
+                <select className='formDificulty' name='dificulty' defaultValue={3} onChange={handleChange}>
                     <option disabled>Dificulty 1 to 5</option>
                     <option value={1} name="dificulty">★☆☆☆☆</option>
                     <option value={2} name="dificulty">★★☆☆☆</option>
-                    <option value={3} name="dificulty">★★★☆☆</option>
                     <option value={4} name="dificulty">★★★★☆</option>
                     <option value={5} name="dificulty">★★★★★</option>
                 </select>
@@ -118,14 +122,14 @@ export default function Form(){
             
         <div className='formDurContainer'>
             <label className= "labelTitle"> Duration(Hours from 1 to 24)
-                <input type="number" name="duration" value={input.duration}/>
+                <input type="number" name="duration" value={input.duration} onChange={handleChange}/>
                 {errors.duration && (<p className='error'>{errors.duration}</p>)}
             </label>
         </div>
 
         <div className='formSeasonContainer'>
             <label className= "labelTitle"> Recommended for:
-            <select className='formSeason' onChange={handleChange}>
+            <select className='formSeason' name='season' onChange={handleChange}>
                 <option disabled>Select a season</option>
                 <option value={"Summer"} name="season">Summer</option>
                 <option value={"Winter"} name="season">Winter</option>
@@ -149,7 +153,7 @@ export default function Form(){
             </label>
         </div>
             
-            <div formButtons>
+            <div className="formButtons">
 
                 <button type='submit'>Create Activity!</button>
                 <NavLink to={"/home"}>

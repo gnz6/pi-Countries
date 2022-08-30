@@ -2,7 +2,7 @@ const { Router } = require('express');
 const axios = require("axios");
 const router = Router();
 const Sequelize = require("sequelize");
-const { where } = require('sequelize');
+const { where, EmptyResultError } = require('sequelize');
 const {Op} = Sequelize.Op;
 const {Country, Activity, Country_Activity} = require("../db");
 const restCountries = "https://restcountries.com/v3/all";
@@ -36,13 +36,11 @@ const getCountries = async()=>{
  
 const getDbCountries = async()=>{
     return await Country.findAll({
-        include:{
-            model: Activity,
-            attributes:["name"],
-            through:{
-                attributes:[]
-            }
-        }
+        include:[{
+                 model: Activity,
+                 attributes:["name","dificulty","duration","season"],
+                 through:{attributes:[]}
+                }]
     })
 }
 
@@ -54,20 +52,49 @@ const allCountries = async()=>{
 }
 
 
-router.get("/countries", async(req, res)=>{
-    const {name} = req.query;
+const createActivity = async(name, dificulty, duration, season, countryName)=>{
+
     const countries = await allCountries();
+    let country = countries.find(f=>f.name.toLowerCase() === countryName.toLowerCase())
+    
     try {
-        if(name){
-            let filter = countries.filter(f=> f.name.toLowerCase().includes(name.toLowerCase()));
-            return res.status(200).send(filter)
+        const newActivity = await Activity.create({
+            name, dificulty, duration, season, countryName
+             })
+
+
+
+            const findActivity = await Activity.findAll({
+                where: {name : name}
+            });
+
+
+            await country.addActivity(findActivity[0].dataValues.id)
+            return newActivity
         }
-        if(!name) return res.status(200).send(countries)
-       }
-    catch (error) {
-        res.send(error)
+        catch(error){
+           console.log(error)
+        }
     }
-})
+
+
+
+
+
+router.get("/countries", async(req, res)=>{
+     const {name} = req.query;
+     const countries = await allCountries();
+     try {
+         if(name){
+             let filter = countries.filter(f=> f.name.toLowerCase().includes(name.toLowerCase()));
+             return res.status(200).send(filter)
+         }
+         if(!name) return res.status(200).send(countries)
+        }
+     catch (error) {
+         res.send(error)
+     }
+ })
 
 
 
@@ -85,43 +112,33 @@ router.get("/countries/:id", async(req, res)=>{
     }
     } catch (error) {
         
-        res.status(404).send("No country was found")
+        console.log(error)
     }
         
 })
 
 
-
-//POST
-
-
 router.post("/activity", async(req,res)=>{
-    const {name, dificulty, duration, season, countries} = req.body; 
-   
-    
+    const {name, dificulty, duration, season, countryName} = req.body; 
     try {
-        const newActivity = await Activity.create({
-            name, dificulty, duration, season, countries
-             })
+        const activity = await createActivity(name, dificulty, duration, season, countryName)
+        return res.status(200).send(activity)
+    } catch (error) {
+        return res.status(400).send(error)
+    }
 
-            const findActivity = await Country.findAll({
-                where: {name : countries}
-            });
-
-            newActivity.addCountries(findActivity)
-            return res.status(200).send(`Activity ${name} added.`)
-        }
-        catch(error){
-            console.log(error)
-           // res.status(400).send("Cant create that activity")
-        }})
+})
 
 
 router.get("/activity", async(req,res)=>{
     try {
         const activities = await Activity.findAll({
-            include: Country
-        })
+            include:[{
+                model: Country,
+                attributes:["name"],
+                through:{attributes:[]}
+               }]        
+            })
         res.send(activities)
         
     } catch (error) {
