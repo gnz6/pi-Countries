@@ -27,12 +27,12 @@ export default function Home(){
     //Paging
 
     const countriesInPage= () =>{
-        if(currentPage === 0) return allCountries.slice(currentPage, currentPage + 9)
         if(search.length === 0 && currentPage === 0) return allCountries.slice(currentPage, currentPage + 9)
-        if(search.length === 0 && currentPage !== 0) return allCountries.slice(currentPage, currentPage + 10)
+        // if(currentPage > 0) return allCountries.slice(currentPage, currentPage + 10)
         
         const filteredCountries = allCountries.filter(c=>c.name.toLowerCase().includes(search.toLowerCase()))
-        return filteredCountries.slice(currentPage + 10)
+        console.log(filteredCountries)
+        return filteredCountries.slice(currentPage, currentPage + 10)
     }
 
     const nextPage = ()=>{
@@ -43,7 +43,7 @@ export default function Home(){
 
     const prevPage = ()=>{
         if(currentPage > 0){
-            setCurrentPage(currentPage + 10)
+            setCurrentPage(currentPage - 10)
         }
     }
 
@@ -59,6 +59,12 @@ export default function Home(){
         setSearch(e.target.value)
         setCurrentPage(0)
     }
+
+
+    //filters
+    
+
+
 
   return (
     <div>
@@ -98,7 +104,7 @@ export default function Home(){
                     />
 
                     </NavLink>
-
+                
                 </div>
             )
         })

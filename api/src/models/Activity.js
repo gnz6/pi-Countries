@@ -8,12 +8,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false
     },
-    // id:{
-    //     type: DataTypes.UUID,
-    //     defaultValue: UUIDV4,
-    //     allowNull: false,
-    //     primaryKey: true
-    // },
     dificulty:{
       type: DataTypes.INTEGER,
       validate:{
@@ -29,7 +23,7 @@ module.exports = (sequelize) => {
       }
     },
     season:{
-      type: DataTypes.ENUM("All", "Summer","Winter", "Fall", "Spring"),
+      type: DataTypes.STRING,
       defaultValue: "All"
     },
   },{

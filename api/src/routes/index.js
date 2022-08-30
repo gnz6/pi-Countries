@@ -19,7 +19,7 @@ const getCountries = async()=>{
             return{
                 name: c.name.common?c.name.common: c.name.official,
                 id: c.cca3? c.cca3: c.cioc,
-                flag: c.flags?c.flags[0]: "no flag registered",
+                flag: c.flags[0]?c.flags[0]: c.flags[1],
                 continent: c.continents?c.continents[0]: "no continent registered",
                 capital: c.capital? c.capital[0]: "no capital registered",
                 subregion: c.subregion? c.subregion: "no subregion registered",
@@ -96,30 +96,37 @@ router.get("/countries/:id", async(req, res)=>{
 
 
 router.post("/activity", async(req,res)=>{
-    const {name, dificulty, duration, season, countryId} = req.body; 
-    if(!name || !dificulty || !duration || !season || !countryId){
-        return res.status(400).send("Missing required parameters")
-    }
+    const {name, dificulty, duration, season, countries} = req.body; 
+   
     
     try {
         const newActivity = await Activity.create({
-            name, dificulty, duration, season, countryId
-            })
-            res.status(200).json(newActivity)
-            const getId = await Activity.findAll({
-                where:{name : name}
-            })
+            name, dificulty, duration, season, countries
+             })
 
-            const country = await Country.findByPk(countryId);
-            await country.addActivity(getId[0].dataValues.id)
-    } catch (error) {
-        console.log(error)
-    }
-})
+            const findActivity = await Country.findAll({
+                where: {name : countries}
+            });
+
+            newActivity.addCountries(findActivity)
+            return res.status(200).send(`Activity ${name} added.`)
+        }
+        catch(error){
+            console.log(error)
+           // res.status(400).send("Cant create that activity")
+        }})
+
 
 router.get("/activity", async(req,res)=>{
-    const activities = await Activity.findAll()
-    res.send(activities)
+    try {
+        const activities = await Activity.findAll({
+            include: Country
+        })
+        res.send(activities)
+        
+    } catch (error) {
+        res.send("No activities stored")
+    }
 })
 
 
