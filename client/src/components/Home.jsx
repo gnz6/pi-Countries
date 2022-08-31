@@ -17,7 +17,6 @@ export default function Home(){
     //localStates
     const [currentPage, setCurrentPage]= useState(0);
     const [search, setSearch]= useState("");
-    const [filter, setFilter] = useState("default");
 
     //useEffect
 
@@ -33,20 +32,17 @@ export default function Home(){
         if(search.length === 0 && currentPage === 0) return allCountries.slice(currentPage, currentPage + 9)
         
         const filteredCountries = allCountries.filter(c=>c.name.toLowerCase().includes(search.toLowerCase()))
-        setFilter(currentPage.toString())
         return filteredCountries.slice(currentPage, currentPage + 10)
     }
 
     const nextPage = ()=>{
         if(allCountries.filter(c=> c.name.includes(search)).length > currentPage + 10){
-            setFilter(currentPage.toString())
             setCurrentPage(currentPage + 10)
         }
     }
 
     const prevPage = ()=>{
         if(currentPage > 0){
-            setFilter(currentPage.toString())
             setCurrentPage(currentPage - 10)
         }
     }
@@ -56,13 +52,11 @@ export default function Home(){
     const handleClick =(e)=>{
         e.preventDefault();
         dispatch(getCountries())
-        setFilter("default")
         setCurrentPage(0)
     }
 
     const handleSearch =(e)=>{
         setSearch(e.target.value)
-        setFilter(e.target.value)
         setCurrentPage(0)
     }
 
@@ -74,7 +68,6 @@ export default function Home(){
         e.preventDefault();
         dispatch(sortByABC(e.target.value))
         setOrder(e.target.value)
-        setFilter(e.target.value)
         setCurrentPage(0)
     }
 
@@ -83,7 +76,6 @@ export default function Home(){
         e.preventDefault();
         dispatch(sortByPopulation(e.target.value))
         setOrder(e.target.value)
-        setFilter(e.target.value)
         setCurrentPage(0)
     }
 
@@ -96,7 +88,6 @@ export default function Home(){
         e.preventDefault();
         dispatch(filterByContinent(e.target.value))
         setOrder(e.target.value)
-        setFilter(e.target.value)
         setCurrentPage(0)
     }
 
@@ -104,7 +95,6 @@ export default function Home(){
         e.preventDefault();
         dispatch(filterByActivity(e.target.value))
         setOrder(e.target.value)
-        setFilter(e.target.value)
         setCurrentPage(0)
     }
 
