@@ -76,35 +76,24 @@ router.get("/countries", async(req, res)=>{
 router.post("/activity", async(req, res)=>{
     const {name, dificulty, duration, season, countryName} = req.body;
     if(!name||!dificulty|!duration||!season||!countryName)return res.status(404).send("Missing parameters")
-    try {
-        const newActivity = await Activity.create({
-            name, dificulty, duration, season, countryName
-        })
+   
+   try {
+    const newActivity =await Activity.create({name, dificulty, duration, season, countryName});
+   
+    const findCountry = await Country.findAll({
+        where:{name: countryName}
+    })
 
-        const findActivity = await Activity.findOne({
-            where : { name : name}
-        })
+    await newActivity.addCountries(findCountry)
 
+    return res.status(200).send(newActivity)
+    
 
-      const country = await Country.findAll({
-        where: {name: countryName}})
-        // include:[{
-        //              model: Activity,
-        //              attributes:["name","dificulty","duration","season"],
-        //              through:{attributes:[]}
-        //             }]
-        //         })
-            
-      let countries = await country.map(c=>c.dataValues)
-        console.log(countries)
+   } catch (error) {
+    console.log(error)
+    return res.status(400).send(error)
+   }
 
-        await findActivity.addCountries(countries);
-
-            return res.status(200).send(newActivity)
-    } catch (error) {
-        console.log(error)
-        res.status(400).send(error)
-    }
 })
 
 

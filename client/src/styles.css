@@ -314,6 +314,10 @@ option{
 
 /* Form */
 
+.formContainer{
+    background-image: url("https://i.pinimg.com/originals/ba/59/94/ba5994829ba487b5f00b0d7f643a6f58.jpg");
+
+}
 
 .formForm{
 display: grid;
@@ -345,6 +349,7 @@ font-style: italic;
 .formNameContainer{
     margin-top: 80px;
     margin-bottom: -20px;
+    
 }
 
 .error{
@@ -366,9 +371,43 @@ margin-bottom: -50px;
     font-weight: bold;
 }
 
+.formButtons{
+    height: 50px;
+    display: flex;
+    margin: 0 auto;
+    
+}
 
+.formButton{
+    height: 40px;
+    margin: 0 3px; 
+    border-radius: 10px;
+    font-size: 18px;
+    font-family: 'Arvo', serif;
+    margin-top: -10px;
+}
 
+.formButton2{
+    height: 30px;
+    margin: 0 3px; 
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Arvo', serif;
+    margin-top: -20px;
+}
 
+.formButton:hover{
+    cursor: pointer;
+    transition: 200ms;
+    background-color: #111;
+    color: #eee;
+}
+
+.formSeasonContainer, .formDurContainer, .formDifContainer{
+    height: 10px;
+    display: flex;
+    margin: 0 auto -10px;
+}
 /* Detail */
 
 .detailContainer{
@@ -381,6 +420,17 @@ margin-bottom: -50px;
     background-size:cover;
     font-size: 20px;
     
+}
+
+
+.countriesForm{
+    height: 20px;
+    font-size: 15px;
+    display: flex;
+    margin: 0 auto;
+    width: 60%;
+    text-align: center;
+    justify-content: center;
 }
 
 .wcContainer{
@@ -397,8 +447,6 @@ margin-bottom: -50px;
 
 .detailTitleContainer{
     display: inline-block;
-    
-
 }
 
 .cont{

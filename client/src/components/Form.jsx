@@ -15,6 +15,7 @@ export default function Form(){
     useEffect(()=>{
         dispatch(getActivities())
         dispatch(getCountries())
+        dispatch(createActivity())
     },[dispatch])
 
     document.title = "Add an Activity!";
@@ -26,7 +27,7 @@ export default function Form(){
         if(!input.dificulty)errors.dificulty = "Plase add a dificulty (1-5)";
         if(!input.duration)errors.duration = "Please add the duration (1-24 hs)";
         if(!input.season)errors.season = "Plase select a season";
-        if(!input.countries)errors.countries = "Select at least 1 country";
+        if(!input.countries)errors.countryName = "Select at least 1 country";
 
         return errors
     }
@@ -38,7 +39,7 @@ export default function Form(){
         dificulty: 0,
         duration: 0,
         season:"",
-        countries:[]
+        countryName:[]
     })
 
     //handlers
@@ -57,11 +58,11 @@ export default function Form(){
     const handleCountrySelect=(e)=>{
         setInput({
             ...input,
-            countries:[...input.countries, e.target.value]
+            countryName:[...input.countryName, e.target.value]
         })
         setErrors(validate({
             ...input,
-            countries:[...input.countries, e.target.value]
+            countryName:[...input.countryName, e.target.value]
         }))
     }
 
@@ -73,7 +74,7 @@ export default function Form(){
             dificulty: 0,
             duration: 0,
             season:"",
-            countries:[]
+            countryName:[]
         })
         console.log(input)
 
@@ -89,7 +90,7 @@ export default function Form(){
             dificulty: 0,
             duration: 0,
             season:"",
-            countries:[]
+            countryName:[]
         })
         console.log(input)
         history.push("/createActivity")
@@ -100,7 +101,7 @@ export default function Form(){
         e.preventDefault()
         setInput({
             ...input,
-            countries:[...input.countries.filter(f=>f === e)]
+            countryName:[...input.countryName.filter(f=>f === e)]
         })
     }
     console.log(input)
@@ -129,7 +130,8 @@ export default function Form(){
             <label className= "labelTitle"> Select Dificulty:
 
                 <select className='formDificulty' name='dificulty' defaultValue={3} onChange={handleChange}>
-                    <option disabled>Dificulty 1 to 5</option>
+                    <option value={null}>Dificulty 1 to 5</option>
+
                     <option value={1} name="dificulty">★☆☆☆☆</option>
                     <option value={2} name="dificulty">★★☆☆☆</option>
                     <option value={4} name="dificulty">★★★★☆</option>
@@ -141,8 +143,8 @@ export default function Form(){
         </div>
             
         <div className='formDurContainer'>
-            <label className= "labelTitle"> Duration(1 to 24 hs)
-                <input type="number" min={1} max={24} name="duration" value={input.duration} onChange={handleChange}/>
+            <label className= "labelTitle"> Duration 
+                <input type="number" min={1} max={24} name="duration" value={input.duration} onChange={handleChange}/> hs
                 {errors.duration && (<p className='error'>{errors.duration}</p>)}
             </label>
         </div>
@@ -163,9 +165,9 @@ export default function Form(){
             
 
         <div className='formCountriesContainer'>
-            <label >Select Country for the Activity
+            <label className='labelTitle'>Select Country for the Activity
                 <select name='countries' onChange={handleCountrySelect}>
-                    <option disabled>Select Country/ies</option>
+                    <option value={null}>Select one or multiple Countries</option>
             {countries?.map(c=>
                             <option key={c.id} value={c.name}> {c.name} </option>
                             )}
@@ -175,12 +177,12 @@ export default function Form(){
 
         <div>
             <h4>Selected Countries</h4>
-            <button onClick={deleteCountries} disabled={!input.countries[0]}>Delete Selected Countries</button>
             <div className='selectedCountries'>
-                {input.countries?.map(c=>{
+                <button onClick={deleteCountries} className="formButton2" disabled={!input.countryName[0]}>Delete Selected Countries</button>
+                {input.countryName?.map(c=>{
                     return(
                         <div className='countriesForm' key={c.id}>
-                            <li>{c}</li>
+                            <li  key={c.id}>{c}</li>
                         </div>
                     )})}
 
@@ -189,11 +191,11 @@ export default function Form(){
             
             <div className="formButtons">
 
-                <button onClick={handleSubmit} type='submit' disabled={!input.name || !input.countries || !input.dificulty || !input.duration || !input.season}>Create and Return Home</button>
+                <button className="formButton" onClick={handleSubmit} type='submit' disabled={!input.name || !input.countryName || input.dificulty < 1 ||!input.dificulty > 5 || input.duration < 1 || input.duration >24 || !input.season}>Create and Return Home</button>
                 <NavLink to={"/home"}>
-                <button type='submit'>Return Home</button>
+                <button className="formButton" type='submit'>Return Home</button>
                 </NavLink>
-                <button onClick={handleSubmitRefresh} type='submit' disabled={!input.name || !input.countries || !input.dificulty || !input.duration || !input.season}>Create and Create another One!</button>
+                <button className="formButton" onClick={handleSubmitRefresh} type='submit' disabled={!input.name || !input.countryName || input.dificulty < 1 ||!input.dificulty > 5 || input.duration < 1 || input.duration >24 || !input.season}>Create and Create another One!</button>
             
             </div>
         </form>}
