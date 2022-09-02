@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import { NavLink, useHistory } from 'react-router-dom';
-import { filterByActivity, filterByContinent, getActivities, getCountries, sortByABC, sortByPopulation } from '../redux/actions';
+import { filterByActivity, filterByContinent, getActivities, getContinents, getCountries, sortByABC, sortByPopulation } from '../redux/actions';
 import Card from './Card';
+import Loader from './Loader';
+import ".././styles.css"
+import Title from './Title';
 
 
 export default function Home(){
@@ -23,6 +26,7 @@ export default function Home(){
     useEffect(()=>{
         dispatch(getCountries())
         dispatch(getActivities())
+        dispatch(getContinents())
         
     },[dispatch])
 
@@ -104,44 +108,38 @@ export default function Home(){
 
 
   return (
-    <div>
-        <h1>COUNTRIES</h1>
+    <div className='homeContainer'>
+        <Title/>
 
+    <div className='allBarsContainer'>
 
-        <div className='orderAplhaContainer'>
-                <label>Order by Alphabet:
-                    <select name='order' defaultValue="ABC" onChange={handleOrderABC}>
+    <div className='orderFilter'>
+
+        <div className='orderContainer'>
+            <h3>Order By</h3>
+       
+                <label>Alphabet:
+                    <select className="homeSelect" name='order' defaultValue="ABC" onChange={handleOrderABC}>
                         <option disabled value="ABC">ABC</option>
                         <option value= "des">  A-Z  ↓↑</option>
                         <option value= "asc">  Z-A  ↑↓ </option>
                     </select>
                 </label>
-            </div>
 
 
-            <div className='orderPopulationContainer'>
-            <label>Order by Population:
-                <select name='population' defaultValue="default" onChange={handleOrderPopulation}>
+            <label>Population:
+                <select className="homeSelect" name='population' defaultValue="default" onChange={handleOrderPopulation}>
                     <option value="default" disabled>Population</option>
                     <option value = "high"> More Populated </option>
                     <option value= "low"> Less populated </option>
                 </select>
             </label>
         </div>
-
-
-
-        <div>
-            <button onClick={prevPage}>Prev</button>
-            <button onClick={handleClick}>REFRESH</button>
-            <NavLink to={"/createActivity"}><button>Create Activity</button></NavLink>
-            <button onClick={nextPage}>Next</button>
-        </div>
-
-
+       
         <div className='filterContainer'>
+        <h3>Filter By</h3>
         <label> Continent:
-        <select name='continent' defaultValue={"all"} onChange={handleContinentChange}>
+        <select className="homeSelect" name='continent' defaultValue={"all"} onChange={handleContinentChange}>
             <option value="all" >Anywhere</option>
             {allContinents.map(c=> 
                <option key={c} value={c} name="continent">{c}</option>
@@ -150,30 +148,41 @@ export default function Home(){
     </label> 
 
 
+   
     <label> Activities:
-        <select name='activities' defaultValue={"all"} onChange={handleActivityChange}>
+        <select className="homeSelect" name='activities' defaultValue={"all"} onChange={handleActivityChange}>
             <option value="all" >Anywhere</option>
             {allActivities.map(a=> 
                <option key={a.id} value={a.name} name="continent">{a.name}</option>
            )} 
         </select>
     </label> 
+</div>
 
-
-
+        
 </div> 
-    
+        
+
+        <div className='pagingContainer'>
+            <button className='pagingButton' onClick={prevPage}> ← Previous Page</button>
+            <button className='pagingButton' onClick={handleClick}>Reload Countries ↺ </button>
+            <NavLink to={"/createActivity"}><button className='pagingButton'>Create Activity</button></NavLink>
+            <button className='pagingButton' onClick={nextPage}>Next Page → </button>
+        </div>
+
+    </div>
 
 
+      
 
         <div className='sbContainer'>
-            <input onChange={handleSearch} placeholder="Search Countries..."/>
+            <input className='sb' onChange={handleSearch} placeholder="Search Countries..."/>
         </div>
 
 
     <div className='cardsContainer'>
         {!countriesInPage()[0]?
-        <h1>LOADINGGG</h1>
+        <Loader/>
         :
         allCountries === "error"?
         <NavLink to={"/"}>
@@ -183,12 +192,12 @@ export default function Home(){
 
         countriesInPage()?.map(c=>{
             return(
-                <div key={c.id} id={c.id} className= "gridCountry">
+                <div key={c.id} id={c.id} >
                     <NavLink to={`/home/${c.id}`}
-                    
+                    className="gridCountry"
                     >
                     
-                    <Card
+                    <Card 
                     key={c.id}
                     id={c.id}
                     name={c.name}

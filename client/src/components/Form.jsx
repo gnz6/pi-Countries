@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useHistory } from 'react-router-dom'
-import { createActiviy, getActivities, getCountries } from '../redux/actions'
+import { createActivity, getActivities, getCountries } from '../redux/actions'
+import Loader from './Loader'
+import Title from "./Title"
+import ".././styles.css"
 
 export default function Form(){
 
     const dispatch = useDispatch()
-    const countries = useSelector(state=> state.countries)
+    const countries = useSelector(state=> state.countries);
+    const history = useHistory();
 
     useEffect(()=>{
         dispatch(getActivities())
@@ -28,7 +32,6 @@ export default function Form(){
     }
 
     const [errors,setErrors]=useState({})
-    const history = useHistory();
 
     const [input, setInput] = useState({
         name: "",
@@ -36,8 +39,6 @@ export default function Form(){
         duration: 0,
         season:"",
         countries:[]
-
-
     })
 
     //handlers
@@ -65,8 +66,8 @@ export default function Form(){
     }
 
     const handleSubmit=(e)=>{
-        e.preventDefault();
-        dispatch(createActiviy(input))
+        e.preventDefault()
+        dispatch(createActivity(input))
         setInput({
             name:"",
             dificulty: 0,
@@ -75,8 +76,25 @@ export default function Form(){
             countries:[]
         })
         console.log(input)
+
         history.push("/home")
     }
+
+
+    const handleSubmitRefresh=(e)=>{
+        e.preventDefault();
+        dispatch(createActivity(input))
+        setInput({
+            name:"",
+            dificulty: 0,
+            duration: 0,
+            season:"",
+            countries:[]
+        })
+        console.log(input)
+        history.push("/createActivity")
+    }
+
 
     const deleteCountries =(e)=>{
         e.preventDefault()
@@ -85,28 +103,30 @@ export default function Form(){
             countries:[...input.countries.filter(f=>f === e)]
         })
     }
-
+    console.log(input)
 
   return (
-    <div className='formContainer'>
+      <div className='formContainer'>
+        <Title/>
         {!countries[0]?
-        <h1>LOADER</h1>
-        :
+    <Loader/>
+    :
 
     
-        <form onSubmit={handleSubmit}>
+        <form className='formForm'>
 
-            <h2>CREATE</h2>
+            <h1 className='formTitle'>Create Activity</h1>
+            <p className="formsubTitle">*Please fill all the fields</p>
 
          <div className='formNameContainer'>
             <label className= "labelTitle"> Name:
-                <input type="text" placeholder='Insert Activity Name..' value={input.name} name="name" onChange={handleChange}/>
+                <input className='formText' type="text" placeholder='Insert Activity Name..' value={input.name} name="name" onChange={handleChange}/>
                  {errors.name && (<p className='error'>{errors.name}</p>)}
             </label>
             </div>   
 
         <div className='formDifContainer'>
-            <label className= "labelTitle"> Select Dificulty(1 - Easier, 5 - Harder):
+            <label className= "labelTitle"> Select Dificulty:
 
                 <select className='formDificulty' name='dificulty' defaultValue={3} onChange={handleChange}>
                     <option disabled>Dificulty 1 to 5</option>
@@ -121,16 +141,16 @@ export default function Form(){
         </div>
             
         <div className='formDurContainer'>
-            <label className= "labelTitle"> Duration(Hours from 1 to 24)
-                <input type="number" name="duration" value={input.duration} onChange={handleChange}/>
+            <label className= "labelTitle"> Duration(1 to 24 hs)
+                <input type="number" min={1} max={24} name="duration" value={input.duration} onChange={handleChange}/>
                 {errors.duration && (<p className='error'>{errors.duration}</p>)}
             </label>
         </div>
 
         <div className='formSeasonContainer'>
-            <label className= "labelTitle"> Recommended for:
-            <select className='formSeason' name='season' onChange={handleChange}>
-                <option disabled>Select a season</option>
+            <label className= "labelTitle"> Recommended Season:
+            <select className='formSeason'  name='season' onChange={handleChange}>
+                <option value={null} >Select a season</option>
                 <option value={"Summer"} name="season">Summer</option>
                 <option value={"Winter"} name="season">Winter</option>
                 <option value={"Spring"} name="season">Spring</option>
@@ -152,13 +172,28 @@ export default function Form(){
                 </select>
             </label>
         </div>
+
+        <div>
+            <h4>Selected Countries</h4>
+            <button onClick={deleteCountries} disabled={!input.countries[0]}>Delete Selected Countries</button>
+            <div className='selectedCountries'>
+                {input.countries?.map(c=>{
+                    return(
+                        <div className='countriesForm' key={c.id}>
+                            <li>{c}</li>
+                        </div>
+                    )})}
+
+            </div>
+        </div>
             
             <div className="formButtons">
 
-                <button type='submit'>Create Activity!</button>
+                <button onClick={handleSubmit} type='submit' disabled={!input.name || !input.countries || !input.dificulty || !input.duration || !input.season}>Create and Return Home</button>
                 <NavLink to={"/home"}>
                 <button type='submit'>Return Home</button>
                 </NavLink>
+                <button onClick={handleSubmitRefresh} type='submit' disabled={!input.name || !input.countries || !input.dificulty || !input.duration || !input.season}>Create and Create another One!</button>
             
             </div>
         </form>}

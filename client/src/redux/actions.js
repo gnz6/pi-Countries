@@ -24,7 +24,18 @@ export function getActivities (){
     }
 }
 
-export function createActiviy (payload){
+export function getContinents (){
+    return async function(dispatch){
+        const link = await axios.get("http://localhost:3001/continents");
+        const resp = link.data;
+        return dispatch({
+            type: "GET_CONTINENTS",
+            payload: resp
+        })
+    }
+}
+
+export function createActivity (payload){
     return async function(){
         const resp = await axios.post("http://localhost:3001/activity", payload)
         return resp

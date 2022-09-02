@@ -5,7 +5,9 @@ const initialState ={
     allCountries : [],
     detail:[],
     activities:[],
-    continents:["Europe", "Oceania", "North America", "South America", "Asia", "Africa"]
+    // continents:["Europe", "Oceania", "North America", "South America", "Asia", "Africa", "Antarctica"],
+    continents:[],
+    mundialist:["Germany", "Qatar", "Brazil", "France", "Belgium", "Serbia","Spain", "Crotatia", "Switzerland","England","United Kingdom", "Netherlands", "Argentina", "Iran", "South Korea", "Saudi Arabia", "Japan", "Uruguay", "Ecuador", "Canada", "Ghana", "Senegal", "Poland", "Portugal", "Tunisia", "Morocco", "Cameroon", "United States", "Mexico", "Wales", "Australia", "Costa Rica"]
 
 }
 
@@ -24,6 +26,12 @@ const rootReducer = (state = initialState, action)=>{
                         ...state,
                         activities:action.payload,
                     }
+
+        case "GET_CONTINENTS":
+            return{
+                ...state,
+                continents: action.payload
+            }
 
         case "GET_DETAIL":
             return{

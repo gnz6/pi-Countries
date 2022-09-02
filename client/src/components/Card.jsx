@@ -5,10 +5,10 @@ export default function Card({name, id, flag, continent, population}){
     <div key={id} className='cardContainer'>
         <h2 className='cardTitle'>{name}</h2>
         <div className='flagContainer'>
-            <img src={flag} alt={`${name}.jpg`} height="200px" width="300px"/>
+            <img src={flag} alt={`${name}.jpg`} className="cardImg" />
         </div>
-        <h4> Continent: {continent}</h4>
-        <p>Population: {population}</p>
+        <h4 className='cardContinent'> Continent: {continent}</h4>
+        <h4 className='cardPopulation'> Population: {population}</h4>
 
 
     </div>
