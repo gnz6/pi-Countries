@@ -1,14 +1,20 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import Footer from "./Footer"
+
 
 export default function Return() {
   document.title = "Page not found"
+
   return (
-    <div className="returnContainer">
+
+    <div>
+      <div className="returnContainer">
 
      
       <h1 className="notFound">Can´t find countries</h1>
-    <NavLink to="/"
+      <img src='https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/34193/globe-clipart-md.png' alt='globe' className='globeImg'/>
+    <NavLink to="/home"
     style={({isActive})=>
             ({
                 color: isActive? "black": "black",
@@ -21,5 +27,8 @@ export default function Return() {
     </NavLink>
 
     </div>
+    <Footer/>
+    </div>
+ 
   )
 }

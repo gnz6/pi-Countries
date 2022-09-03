@@ -56,10 +56,10 @@ router.get("/countries", async(req, res)=>{
                 through:{attributes:[]}
                }]
         })
-        return res.status(200).send(country)
+        country.length? res.status(200).send(country):
+        res.status(400).send("No country matches that name")
     }
         catch(error){
-            console.log(error)
         return res.status(400).send("No country matches that name")
         }
     }if(!name && countries.length){

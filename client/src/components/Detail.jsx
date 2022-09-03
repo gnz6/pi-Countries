@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import Loader from './Loader';
 import Title from './Title';
 import ".././styles.css";
+import Footer from "./Footer"
+
 
 export default function Detail(){
   
@@ -87,12 +89,12 @@ export default function Detail(){
                 <h4>Population</h4>
                 <div className='popContainer'>
 
-                <h3 className='detailPopulation'>{country.population }</h3>
+                <h3 className='detailPopulation'>{`${country.population}-` }</h3>
                 <h3 className='detailPopulation'> 
-                {country.population.toString().length >= 6? "million people":
-                country.population.toString().length === 5 || country.population.toString().length === 4? "thousand people" :
-                country.population.toString().length === 3? "hundred people":
-                country.population.toString().length < 3? "people" :null
+                {country.population.toString().length >= 6? ` Million`:
+                country.population.toString().length === 5 || country.population.toString().length === 4? " Thousand" :
+                country.population.toString().length === 3? " Hundred ":
+                country.population.toString().length < 3? + " People" :null
             }
                 </h3>
             </div>
@@ -109,6 +111,8 @@ export default function Detail(){
                 
                 <div className='detailActivitiesContainer'>
                     <h2>Recomended Activities from {country.name}</h2>
+                <div className='detailActivitiesContainer2'>
+
                     {country.activities.map(a=><div className='detailActivity'>
                         <h3 className='activityName'>{a.name}</h3>
                         <p>Dificulty :{a.dificulty} ★</p>
@@ -116,6 +120,7 @@ export default function Detail(){
                         <p>Recomended Season :{a.season}</p>
 
                     </div>)}
+                    </div>
                 </div>
             :
             <div className='detailActivitiesContainer'><h4> No regitered Activities yet</h4></div>
@@ -127,6 +132,7 @@ export default function Detail(){
                 <button className='detailButton'>Return to GlobeWiki</button>
             </NavLink>
         </div>}
+        <Footer/>
     </div>
   )
 }

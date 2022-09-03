@@ -1,15 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { filterByActivity, filterByContinent, getActivities, getContinents, getCountries, sortByABC, sortByPopulation } from '../redux/actions';
 import Card from './Card';
 import Loader from './Loader';
 import ".././styles.css"
 import Title from './Title';
+import useLocalStorage from './useLocalStorage';
+import Return from './Return';
+import Footer from "./Footer"
+
 
 
 export default function Home(){
-    document.title = "CountryApp"
+    document.title = "GlobeWiki"
 
     
     const dispatch = useDispatch();
@@ -18,8 +22,8 @@ export default function Home(){
     const allContinents = useSelector(state=> state.continents)
 
     //localStates
-    const [currentPage, setCurrentPage]= useState(0);
-    const [search, setSearch]= useState("");
+    const [currentPage, setCurrentPage]= useLocalStorage("currentPage", "");
+    const [search, setSearch]= useLocalStorage("search","");
 
     //useEffect
 
@@ -63,21 +67,19 @@ export default function Home(){
         setSearch(e.target.value)
         setCurrentPage(0)
     }
-
+    
     //Orders
-    const[order, setOrder]= useState("");
-
+    const[order, setOrder]= useLocalStorage("order" ,"");
 
     const handleOrderABC = (e)=>{
-        e.preventDefault();
         dispatch(sortByABC(e.target.value))
         setOrder(e.target.value)
         setCurrentPage(0)
     }
 
 
+
     const handleOrderPopulation = (e)=>{
-        e.preventDefault();
         dispatch(sortByPopulation(e.target.value))
         setOrder(e.target.value)
         setCurrentPage(0)
@@ -88,20 +90,21 @@ export default function Home(){
     //filters
 
 
+
     const handleContinentChange =(e)=>{
-        e.preventDefault();
         dispatch(filterByContinent(e.target.value))
         setOrder(e.target.value)
         setCurrentPage(0)
+
     }
 
+
+
     const handleActivityChange =(e)=>{
-        e.preventDefault();
         dispatch(filterByActivity(e.target.value))
         setOrder(e.target.value)
         setCurrentPage(0)
     }
-
 
 
 
@@ -119,8 +122,8 @@ export default function Home(){
             <h3>Order By</h3>
        
                 <label>Alphabet:
-                    <select className="homeSelect" name='order' defaultValue="ABC" onChange={handleOrderABC}>
-                        <option disabled value="ABC">ABC</option>
+                    <select className="homeSelect" name='order' defaultValue={null} onChange={handleOrderABC}>
+                        <option value={null} >ABC</option>
                         <option value= "des">  A-Z  ↓↑</option>
                         <option value= "asc">  Z-A  ↑↓ </option>
                     </select>
@@ -129,7 +132,7 @@ export default function Home(){
 
             <label>Population:
                 <select className="homeSelect" name='population' defaultValue="default" onChange={handleOrderPopulation}>
-                    <option value="default" disabled>Population</option>
+                    <option value={null} >Population</option>
                     <option value = "high"> More Populated </option>
                     <option value= "low"> Less populated </option>
                 </select>
@@ -182,12 +185,12 @@ export default function Home(){
 
     <div className='cardsContainer'>
         {!countriesInPage()[0]?
-        <Loader/>
+        <div onClick={()=>setSearch("")}>
+            <Loader/>
+        </div>
         :
         allCountries === "error"?
-        <NavLink to={"/"}>
-            <button>return</button>
-        </NavLink>
+       <Return/>
         :
 
         countriesInPage()?.map(c=>{
@@ -216,8 +219,7 @@ export default function Home(){
 
     </div>
 
-
-
+    <Footer/>
 
     </div>
   )

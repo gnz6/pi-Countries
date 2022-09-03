@@ -87,9 +87,11 @@ const rootReducer = (state = initialState, action)=>{
         case "FILTER_BY_ACTIVITY":
 
             const countries = state.allCountries;
-            let countyActivity = action.payload === "all" ? countries : countries.filter(c => c.activities.includes(action.payload))
+            const nonEmpty = countries.filter(country=> country.activities.length >0 )
+            const nonEmpty2 = nonEmpty.filter(c=> c.activities[0].name.includes(action.payload))
+            let countyActivity = action.payload === "all" ? countries : nonEmpty2
             if(!countyActivity[0]) countyActivity = "error"
-
+        
         return{
             ...state,
             countries: countyActivity

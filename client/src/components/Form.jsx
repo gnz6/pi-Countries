@@ -5,6 +5,8 @@ import { createActivity, getActivities, getCountries } from '../redux/actions'
 import Loader from './Loader'
 import Title from "./Title"
 import ".././styles.css"
+import Footer from "./Footer"
+
 
 export default function Form(){
 
@@ -199,7 +201,7 @@ export default function Form(){
             
             </div>
         </form>}
-        
+        <Footer/>
     </div>
   )
 }
