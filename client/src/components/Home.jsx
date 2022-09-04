@@ -69,19 +69,35 @@ export default function Home(){
     }
     
     //Orders
-    const[order, setOrder]= useLocalStorage("order" ,"");
+    // const[order, setOrder]= useLocalStorage("order" ,"");
+    // const[order, setOrder]= useLocalStorage({
+    //     orderAbc: ("abc", ""),    
+    //     orderPop: ("pop", ""),   
+    //     orderContinent: ("continent", ""),    
+    //     orderActivity: ("activity", "")    
+    // });
+
+
+    const [orderAbc, setorderAbc]= useLocalStorage("orderAbc","");
 
     const handleOrderABC = (e)=>{
         dispatch(sortByABC(e.target.value))
-        setOrder(e.target.value)
+        setorderAbc(e.target.value)
+        setorderPop("")
+        setorderContinent("")
+        setorderActivity("")
         setCurrentPage(0)
     }
 
+    const [orderPop, setorderPop]= useLocalStorage("orderPop","");
 
 
     const handleOrderPopulation = (e)=>{
         dispatch(sortByPopulation(e.target.value))
-        setOrder(e.target.value)
+        setorderPop(e.target.value)
+        setorderAbc("")
+        setorderContinent("")
+        setorderActivity("")
         setCurrentPage(0)
     }
 
@@ -89,20 +105,29 @@ export default function Home(){
 
     //filters
 
+    const [orderContinent, setorderContinent]= useLocalStorage("orderContinent","");
 
 
     const handleContinentChange =(e)=>{
         dispatch(filterByContinent(e.target.value))
-        setOrder(e.target.value)
+        setorderContinent(e.target.value)
+        setorderActivity("")
+        setorderPop("")
+        setorderAbc("")
+
         setCurrentPage(0)
 
     }
 
+    const [orderActivity, setorderActivity]= useLocalStorage("orderActivity", "");
 
 
     const handleActivityChange =(e)=>{
         dispatch(filterByActivity(e.target.value))
-        setOrder(e.target.value)
+        setorderActivity(e.target.value)
+        setorderContinent("")
+        setorderPop("")
+        setorderAbc("")
         setCurrentPage(0)
     }
 
@@ -216,6 +241,13 @@ export default function Home(){
         })
     }
 
+
+    </div>
+
+    <div className='pagingContainer'>
+    <button className='pagingButton' onClick={prevPage}> ← Previous Page</button>
+    <h3 className='numButton'>{currentPage === 0 ? 0: currentPage.toString().length == 2? currentPage.toString()[0]: currentPage.toString()[0]+currentPage.toString()[1]}</h3>
+    <button className='pagingButton' onClick={nextPage}>Next Page → </button>
 
     </div>
 

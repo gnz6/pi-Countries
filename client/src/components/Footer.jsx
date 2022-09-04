@@ -10,9 +10,9 @@ export default function Footer() {
             <img className='icon' src="https://cdn-icons-png.flaticon.com/512/61/61109.png" alt="linkedin"/>
             </a>
             <a href='https://github.com/gnz6'>
-            <a href='https://mail.google.com/mail/'>
             <img className='icon' src="https://cdn-icons-png.flaticon.com/512/60/60543.png" alt="gmail"/>
             </a>
+            <a href='https://mail.google.com/mail/'>
             <img className='icon' src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="github"/>
             </a>
 

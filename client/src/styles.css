@@ -6,6 +6,7 @@ body{
     color: #eee;
     font-family: 'Arvo', serif;
     margin: 0 auto;
+    width: 100%;
 }
 
 /* Loader */
@@ -26,9 +27,6 @@ body{
     margin-top: -50px;
     font-style: italic;
 }
-
-
-
 
 
 /* Landing */
@@ -131,7 +129,8 @@ body{
     background-image: url("https://i.pinimg.com/originals/ba/59/94/ba5994829ba487b5f00b0d7f643a6f58.jpg");
     background-repeat:no-repeat;
     background-size:cover;
-
+    width: 100%;
+    margin: 0 auto;
 }
 
  .allBarsContainer{
@@ -184,14 +183,33 @@ option{
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    margin-top: 5px;
+    margin: 5px auto;
+    align-items: center;
+    text-align: center;
+   
+    
+}
+
+.numButton{
+    height: 45px;
+    color: #eee;
+    border:2px solid #eee;
+    font-size: 18px;
+    border-radius: 10px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 10px;
+    width: 50px;
+    font-family: 'Arvo', serif;
+    background-color: #111;
+    align-items: center;
+    justify-content: center;
 }
 
 .pagingButton{
     position: sticky;
     height: 50px;
     color: #eee;
-
     border:2px solid #eee;
     font-size: 15px;
     border-radius: 10px;
@@ -250,8 +268,8 @@ option{
     align-items: center;
     justify-content: center;
     padding: 60px;
-    margin: 0 50%;
-    padding-bottom: 200px;
+    margin: 0 30%;
+    padding-bottom: 100px;
 }
 
 
@@ -619,13 +637,12 @@ footer{
 .iconsFooter{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: space-evenly;
-    margin: 20px auto ;
+    justify-content: center;
+    margin: 20px ;
 }
 
 .icon{
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
     padding: 5px;
 }
