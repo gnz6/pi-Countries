@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import { NavLink } from 'react-router-dom';
-import { filterByActivity, filterByContinent, getActivities, getContinents, getCountries, sortByABC, sortByPopulation } from '../redux/actions';
+import { filterByActivity, filterByContinent, filterBySubregion, getActivities, getContinents, getCountries, sortByABC, sortByPopulation } from '../redux/actions';
 import Card from './Card';
 import Loader from './Loader';
 import ".././styles.css"
@@ -60,6 +60,7 @@ export default function Home(){
     const handleClick =(e)=>{
         e.preventDefault();
         dispatch(getCountries())
+        setSearch("")
         setCurrentPage(0)
     }
 
@@ -133,8 +134,6 @@ export default function Home(){
 
 
 
-
-
   return (
     <div className='homeContainer'>
         <Title/>
@@ -175,6 +174,7 @@ export default function Home(){
         </select>
     </label> 
 
+    
 
    
     <label> Activities:

@@ -92,11 +92,21 @@ const rootReducer = (state = initialState, action)=>{
             let countyActivity = action.payload === "all" ? countries : nonEmpty2
             if(!countyActivity[0]) countyActivity = "error"
         
+
         return{
             ...state,
             countries: countyActivity
         }
 
+
+        case "FILTER_BY_SUBREGION":
+            const paises = state.allCountries;
+            let subregion = action.payload === "all"? paises: paises.filter(p=>p.subregion.includes(action.payload))
+            console.log(action)
+            return{
+                state,
+                countries: subregion
+            }
 
 
             default:
