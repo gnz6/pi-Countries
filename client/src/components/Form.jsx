@@ -27,7 +27,7 @@ export default function Form(){
         let errors={};
         if(!input.name)errors.name = "Plase name the activity";
         if(!input.dificulty)errors.dificulty = "Plase add a dificulty (1-5)";
-        if(!input.duration)errors.duration = "Please add the duration (1-24 hs)";
+        if(!input.duration || input.duration < 1 || input.duration > 24)errors.duration = "Please add the duration (1-24 hs)";
         if(!input.season)errors.season = "Plase select a season";
         if(!input.countries)errors.countryName = "Select at least 1 country";
 
@@ -43,6 +43,8 @@ export default function Form(){
         season:"",
         countryName:[]
     })
+
+    const [success, setSuccess] = useState("")
 
     //handlers
 
@@ -79,7 +81,7 @@ export default function Form(){
             countryName:[]
         })
         console.log(input)
-
+        setSuccess( `Activity ${input.name } Created!`)
         history.push("/home")
     }
 
@@ -95,6 +97,7 @@ export default function Form(){
             countryName:[]
         })
         console.log(input)
+        setSuccess( `Activity ${input.name } Created!`)
         history.push("/createActivity")
     }
 
@@ -200,6 +203,8 @@ export default function Form(){
                 <button className="formButton" onClick={handleSubmitRefresh} type='submit' disabled={!input.name || !input.countryName || input.dificulty < 1 ||!input.dificulty > 5 || input.duration < 1 || input.duration >24 || !input.season}>Create and Create another One!</button>
             
             </div>
+             {success && (<p className='success'>{`Activity ${input.name} created`} </p>)}
+
         </form>}
         <Footer/>
     </div>

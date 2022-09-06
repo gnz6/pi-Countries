@@ -87,27 +87,25 @@ const rootReducer = (state = initialState, action)=>{
         case "FILTER_BY_ACTIVITY":
 
             const countries = state.allCountries;
-            const nonEmpty = countries.filter(country=> country.activities.length >0 )
-            const nonEmpty2 = nonEmpty.filter(c=> c.activities[0].name.includes(action.payload))
-            let countyActivity = action.payload === "all" ? countries : nonEmpty2
-            if(!countyActivity[0]) countyActivity = "error"
+
+            const nonEmpty2 = countries.filter(c=>{
+                let activi = c.activities.filter(a=> a.name.includes(action.payload))
+                if(activi.length >0 ){
+                    return true
+                } else{
+                    return false
+                }}
+            )
+            
+
+            let countryActivity = action.payload === "all" ? countries : nonEmpty2
+            if(!countryActivity[0]) countryActivity = "error"
         
 
         return{
             ...state,
-            countries: countyActivity
+            countries: countryActivity
         }
-
-
-        case "FILTER_BY_SUBREGION":
-            const paises = state.allCountries;
-            let subregion = action.payload === "all"? paises: paises.filter(p=>p.subregion.includes(action.payload))
-            console.log(action)
-            return{
-                state,
-                countries: subregion
-            }
-
 
             default:
                 return state
