@@ -46,28 +46,36 @@ const rootReducer = (state = initialState, action)=>{
                     if(b.name > a.name) return -1
                     return 0
                 }):
+            action.payload === "asc"?
                 state.countries.sort((a,b)=>{
                     if(a.name < b.name) return 1
                     if(b.name < a.name) return -1
                     return 0
-                    }) 
+                    }) :
+                    null
             
             return{
                 ...state, letterOrder
             }
 
             case "SORT_BY_POPULATION":
+
+                
+
                 let populationOrder = action.payload === "low"?
                 state.countries.sort((a,b)=>{
                     if(a.population > b.population) return 1
                     if(b.population > a.population) return -1
                     return 0
-                }):
+                })
+                :
+                action.payload === "high"?
                 state.countries.sort((a,b)=>{
                     if(a.population < b.population) return 1
                     if(b.population < a.population) return -1
                     return 0
-                    }) 
+                    }):
+                    null
             
             return{
                 ...state, populationOrder
@@ -88,17 +96,15 @@ const rootReducer = (state = initialState, action)=>{
 
             const countries = state.allCountries;
 
-            const nonEmpty2 = countries.filter(c=>{
-                let activi = c.activities.filter(a=> a.name.includes(action.payload))
-                if(activi.length >0 ){
+            const filter = countries.filter(c=>{
+                let activity = c.activities.filter(a=> a.name.includes(action.payload))
+                if(activity.length >0 ){
                     return true
-                } else{
-                    return false
-                }}
+                } return false
+                }
             )
-            
-
-            let countryActivity = action.payload === "all" ? countries : nonEmpty2
+        
+            let countryActivity = action.payload === "all" ? countries : filter
             if(!countryActivity[0]) countryActivity = "error"
         
 

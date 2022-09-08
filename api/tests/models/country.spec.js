@@ -1,5 +1,5 @@
-const { Country, conn } = require('../../src/db.js');
-const { expect } = require('chai');
+const { Country, conn, Activity } = require('../../src/db.js');
+const { expect, assert, should } = require('chai');
 
 describe('Country model', () => {
   before(() => conn.authenticate()
@@ -18,5 +18,8 @@ describe('Country model', () => {
         Country.create({ name: 'Argentina' });
       });
     });
+    describe("id", ()=>{
+      
+    })
   });
 });

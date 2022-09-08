@@ -20,12 +20,12 @@ export default function Detail(){
   
     const country= useSelector(state=>state.detail);
     const mundialist= useSelector(state=>state.mundialist);
-    document.title = "GlobeWiki -"+" "+country.id
+    document.title = "GlobeWiki -"+country.id
 
   
     return (
     <div>
-        {!country || country.id != id?
+        {!country || country.id !== id?
         <Loader/>:
         <div className='detailContainer'>
             <Title/>
@@ -37,14 +37,14 @@ export default function Detail(){
 
                 <div className='wcContainer'>
                 {country.name === "Qatar" ? <div className='wc'>
-                    <img src='https://www.lifepng.com/wp-content/uploads/2020/12/Fifa-World-Cup-png-hd.png' height="140px"/>
+                    <img src='https://www.lifepng.com/wp-content/uploads/2020/12/Fifa-World-Cup-png-hd.png' alt='worldCup'  height="140px"/>
                     <p>Fifa World Cup 2022 Organizer</p>
                 </div>
                 :
                 <div className='wc'>
                 {mundialist.includes(country.name)?
                 <div className='wc'>
-                    <img src='https://www.lifepng.com/wp-content/uploads/2020/12/Fifa-World-Cup-png-hd.png' height="140px"/>
+                    <img src='https://www.lifepng.com/wp-content/uploads/2020/12/Fifa-World-Cup-png-hd.png' alt='worldCup' height="140px"/>
                     <p>Fifa World Cup 2022 Participant</p>
 
                 </div>:

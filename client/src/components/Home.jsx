@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import { NavLink } from 'react-router-dom';
-import { filterByActivity, filterByContinent, filterBySubregion, getActivities, getContinents, getCountries, sortByABC, sortByPopulation } from '../redux/actions';
+import { filterByActivity, filterByContinent, getActivities, getContinents, getCountries, sortByABC, sortByPopulation } from '../redux/actions';
 import Card from './Card';
 import Loader from './Loader';
 import ".././styles.css"
@@ -28,6 +28,7 @@ export default function Home(){
     //useEffect
 
     useEffect(()=>{
+        
         dispatch(getCountries())
         dispatch(getActivities())
         dispatch(getContinents())
@@ -69,36 +70,21 @@ export default function Home(){
         setCurrentPage(0)
     }
     
-    //Orders
-    // const[order, setOrder]= useLocalStorage("order" ,"");
-    // const[order, setOrder]= useLocalStorage({
-    //     orderAbc: ("abc", ""),    
-    //     orderPop: ("pop", ""),   
-    //     orderContinent: ("continent", ""),    
-    //     orderActivity: ("activity", "")    
-    // });
 
 
-    const [orderAbc, setorderAbc]= useLocalStorage("orderAbc","");
+    const[order, setOrder] = useLocalStorage("order", "")
 
     const handleOrderABC = (e)=>{
         dispatch(sortByABC(e.target.value))
-        setorderAbc(e.target.value)
-        setorderPop("")
-        setorderContinent("")
-        setorderActivity("")
+        setOrder(e.target.value)
         setCurrentPage(0)
     }
 
-    const [orderPop, setorderPop]= useLocalStorage("orderPop","");
 
 
     const handleOrderPopulation = (e)=>{
         dispatch(sortByPopulation(e.target.value))
-        setorderPop(e.target.value)
-        setorderAbc("")
-        setorderContinent("")
-        setorderActivity("")
+        setOrder(e.target.value)
         setCurrentPage(0)
     }
 
@@ -106,31 +92,24 @@ export default function Home(){
 
     //filters
 
-    const [orderContinent, setorderContinent]= useLocalStorage("orderContinent","");
+
+    const [filter, setFilter] = useLocalStorage("filter","")
 
 
     const handleContinentChange =(e)=>{
         dispatch(filterByContinent(e.target.value))
-        setorderContinent(e.target.value)
-        setorderActivity("")
-        setorderPop("")
-        setorderAbc("")
-
+        setFilter(e.target.value)
         setCurrentPage(0)
-
     }
 
-    const [orderActivity, setorderActivity]= useLocalStorage("orderActivity", "");
 
 
     const handleActivityChange =(e)=>{
         dispatch(filterByActivity(e.target.value))
-        setorderActivity(e.target.value)
-        setorderContinent("")
-        setorderPop("")
-        setorderAbc("")
+        setFilter(e.target.value)
         setCurrentPage(0)
     }
+
 
 
 
@@ -146,8 +125,8 @@ export default function Home(){
             <h3>Order By</h3>
        
                 <label>Alphabet:
-                    <select className="homeSelect" name='order' defaultValue={null} onChange={handleOrderABC}>
-                        <option value={null} >ABC</option>
+                    <select className="homeSelect" name='order' defaultValue={""} onChange={handleOrderABC}>
+                        <option value={""} >ABC</option>
                         <option value= "des">  A-Z  ↓↑</option>
                         <option value= "asc">  Z-A  ↑↓ </option>
                     </select>
@@ -155,8 +134,8 @@ export default function Home(){
 
 
             <label>Population:
-                <select className="homeSelect" name='population' defaultValue="default" onChange={handleOrderPopulation}>
-                    <option value={null} >Population</option>
+                <select className="homeSelect" name='population' defaultValue={""} onChange={handleOrderPopulation}>
+                    <option value={""} >Population</option>
                     <option value = "high"> More Populated </option>
                     <option value= "low"> Less populated </option>
                 </select>
@@ -192,7 +171,7 @@ export default function Home(){
         
 
         <div className='pagingContainer'>
-            <button className='pagingButton' onClick={prevPage}> ← Previous Page</button>
+            <button className='pagingButton' onClick={prevPage} disabled={currentPage <= 0}> ← Previous Page</button>
             <button className='pagingButton' onClick={handleClick}>Reload Countries ↺ </button>
             <NavLink to={"/createActivity"}><button className='pagingButton'>Create Activity</button></NavLink>
             <button className='pagingButton' onClick={nextPage}>Next Page → </button>
@@ -246,7 +225,7 @@ export default function Home(){
 
     <div className='pagingContainer'>
     <button className='pagingButton' onClick={prevPage}> ← Previous Page</button>
-    <h3 className='numButton'>{currentPage === 0 ? 0: currentPage.toString().length == 2? currentPage.toString()[0]: currentPage.toString()[0]+currentPage.toString()[1]}</h3>
+    <h3 className='numButton'>{currentPage === 0 ? 0: currentPage.toString().length === 2? currentPage.toString()[0]: currentPage.toString()[0]+currentPage.toString()[1]}</h3>
     <button className='pagingButton' onClick={nextPage}>Next Page → </button>
 
     </div>

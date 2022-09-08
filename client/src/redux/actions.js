@@ -2,25 +2,18 @@ import axios from "axios";
 const url = "http://localhost:3001/countries";  
 
 
-// export function getCountries (){
-//     return async function(dispatch){
-//         const link = await axios.get(url);
-//         const resp = link.data;
-//         return dispatch({
-//             type: "GET_COUNTRIES",
-//             payload: resp
-//         })
-//     }
-// }
+ export function getCountries (){
+     return async function(dispatch){
+         const link = await axios.get(url);
+         const resp = link.data;
+         return dispatch({
+             type: "GET_COUNTRIES",
+             payload: resp
+         })
+     }
+ }
 
-export const getCountries = () =>(dispatch)=>{
-   return fetch(url)
-    .then(resp=>resp.json())
-    .then(countries=>{
-        dispatch({type:"GET_COUNTRIES", payload:countries})
-    })
-    
-}
+
 
 export function getActivities (){
     return async function(dispatch){
@@ -76,13 +69,6 @@ export function filterByContinent(payload){
 export function filterByActivity(payload){
     return {
         type:"FILTER_BY_ACTIVITY",
-        payload
-    }
-}
-
-export function filterBySubregion(payload){
-    return {
-        type:"FILTER_BY_SUBREGION",
         payload
     }
 }

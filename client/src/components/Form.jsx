@@ -203,7 +203,7 @@ export default function Form(){
                 <button className="formButton" onClick={handleSubmitRefresh} type='submit' disabled={!input.name || !input.countryName || input.dificulty < 1 ||!input.dificulty > 5 || input.duration < 1 || input.duration >24 || !input.season}>Create and Create another One!</button>
             
             </div>
-             {success && (<p className='success'>{`Activity ${input.name} created`} </p>)}
+             {success && (<p className='success'>{success} </p>)}
 
         </form>}
         <Footer/>
