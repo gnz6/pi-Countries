@@ -37,10 +37,30 @@ body{
     background-repeat: no-repeat;
     background-size:cover;
     position: relative;
-    padding: 10px;
     position: relative;
-    height: 95vh;;
+    height: 99.8vh;
+    display: grid;
+    grid-template-rows: repeat(1, 1fr);
 }
+
+
+.landingFooter{
+    align-items: center;
+    justify-content: center;
+    height: 90px;
+    width: 184.5vh;
+    margin: 0 auto;
+    border-top: rgb(214,164,89) 5px solid;
+    opacity: 90%;
+    
+}
+
+.iconLanding{
+    height: 70px;
+    width: 70px;
+    margin: 0 8px;
+}
+
 
 .landingImg{
     height: 69vh;
@@ -358,52 +378,70 @@ option{
 
 .formContainer{
     background-image: url("https://i.pinimg.com/originals/ba/59/94/ba5994829ba487b5f00b0d7f643a6f58.jpg");
-
+    background-repeat: no-repeat;
+    background-size: cover;
+    
 }
 
 .formForm{
-display: grid;
+display: flex;
+flex-direction: column;
+gap: 70px;
 background-image: url("https://clipart.world/wp-content/uploads/2020/08/vintage-scroll-png-transparent.png");
 background-size: fit-content;
 background-repeat: no-repeat;
 background-position: center;
 color: #000;
-width: 80%;
+width: 100%;
 position: relative;
 margin-left: auto;
 margin-right: auto;
 height: 900px;
 font-size: 20px;
 font-style: italic;
+padding-top: 100px;
+}
+
+.formTitles{
+    height: 100px;
+    margin-top: 150px;
+    text-decoration: underline;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
 }
 
 .formTitle{
-    margin-top: 60px;
-    margin-bottom: -150px;
+    height: 50px;
     text-decoration: underline;
 }
 .formsubTitle{
+    height: 50px;
     font-size: 15px;
-    margin-top: 60px;
-    margin-bottom: -250px;
+    margin-bottom: -150px;
+
 }
 
 .formNameContainer{
     height: 10px;
-    margin-top: 80px;
     margin-bottom: -20px;
     
 }
 
 .error{
+    height: 15px;
     font-size: 15px;
     color: rgba(242, 7, 7, 0.77);
     -webkit-text-stroke: 0.1px black;
 }
 
 .success{
+    height: 25px; ;
     font-size: 25px;
     color: rgba(10, 194, 50, 0.77);
+    opacity: 70%;
     /* -webkit-text-stroke: 0.2px white; */
     
     height: 30px;
@@ -433,8 +471,11 @@ margin-bottom: -50px;
 .formButtons{
     height: 50px;
     display: flex;
-    margin: 0 auto;
-    
+    position: relative;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 0px;
 }
 
 .formButton{
@@ -467,6 +508,41 @@ margin-bottom: -50px;
     display: flex;
     margin: 0 auto -10px;
 }
+
+.formX{
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    font-style: italic;
+}
+
+.formX:hover{
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    color: rgba(214, 0, 0, 0.619);
+    font-size: 15px;
+    font-style: italic;
+    cursor: pointer;
+    transition: 100ms;
+}
+
+.selectedCountries{
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+width: 700px;
+margin:  0 auto;
+justify-content: center;
+align-items: center;
+height: 10px;
+}
+
+.formCountriesContainer{
+    max-height: 290px;
+    
+}
+
 /* Detail */
 
 .detailContainer{
@@ -483,13 +559,14 @@ margin-bottom: -50px;
 
 
 .countriesForm{
-    height: 20px;
+    height: fit-content;
     font-size: 15px;
     display: flex;
-    margin: 0 auto;
+    margin: 1px auto;
     width: 60%;
     text-align: center;
     justify-content: center;
+    text-decoration: underline;
 }
 
 .wcContainer{

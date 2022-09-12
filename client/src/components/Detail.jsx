@@ -89,14 +89,20 @@ export default function Detail(){
                 <h4>Population</h4>
                 <div className='popContainer'>
 
-                <h3 className='detailPopulation'>{`${country.population}-` }</h3>
                 <h3 className='detailPopulation'> 
-                {country.population.toString().length >= 6? ` Million`:
-                country.population.toString().length === 5 || country.population.toString().length === 4? " Thousand" :
-                country.population.toString().length === 3? " Hundred ":
-                country.population.toString().length < 3? + " People" :null
-            }
+                {country.population? 
+                        country.population.toString().length ===10 ? `${country.population.toString()[0]}${country.population.toString()[1]}${country.population.toString()[2]}${country.population.toString()[3]}.${country.population.toString()[4]} Million`:
+                        country.population.toString().length ===9 ? `${country.population.toString()[0]}${country.population.toString()[1]}${country.population.toString()[2]}.${country.population.toString()[3]} Million`:
+                        country.population.toString().length ===8 ? `${country.population.toString()[0]}${country.population.toString()[1]}.${country.population.toString()[2]} Million`:
+                        country.population.toString().length ===7 ? `${country.population.toString()[0]}.${country.population.toString()[1]} Million`:
+                        country.population.toString().length ===6 ? `${country.population.toString()[0]}${country.population.toString()[1]}${country.population.toString()[2]}.${country.population.toString()[3]}${country.population.toString()[4]}${country.population.toString()[5]} Thousand`:
+                        country.population.toString().length ===5 ? `${country.population.toString()[0]}${country.population.toString()[1]}.${country.population.toString()[2]}${country.population.toString()[3]}${country.population.toString()[4]} Thousand`:
+                        country.population.toString().length ===4 ? `${country.population.toString()[0]}.${country.population.toString()[1]}${country.population.toString()[2]}${country.population.toString()[3]} Thousand`:
+                        country.population.toString().length ===3 ? `${country.population} Hundred`:
+                        country.population.toString().length < 3 ? `${country.population} Habitants`:
+                    country.population: `No population registered`}
                 </h3>
+             
             </div>
                 
                  
@@ -113,7 +119,7 @@ export default function Detail(){
                     <h2>Recomended Activities from {country.name}</h2>
                 <div className='detailActivitiesContainer2'>
 
-                    {country.activities.map(a=><div className='detailActivity'>
+                    {country.activities.map(a=><div key={a.id} className='detailActivity'>
                         <h3 className='activityName'>{a.name}</h3>
                         <p>Dificulty :{a.dificulty} ★</p>
                         <p>Duration :{a.duration} hour/s</p>

@@ -14,7 +14,6 @@ const url = "http://localhost:3001/countries";
  }
 
 
-
 export function getActivities (){
     return async function(dispatch){
         const link = await axios.get("http://localhost:3001/activity");

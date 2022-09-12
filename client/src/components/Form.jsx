@@ -29,7 +29,7 @@ export default function Form(){
         if(!input.dificulty)errors.dificulty = "Plase add a dificulty (1-5)";
         if(!input.duration || input.duration < 1 || input.duration > 24)errors.duration = "Please add the duration (1-24 hs)";
         if(!input.season)errors.season = "Plase select a season";
-        if(!input.countries)errors.countryName = "Select at least 1 country";
+        if(!input.countryName[0])errors.countryName = "Select at least 1 country";
 
         return errors
     }
@@ -60,14 +60,26 @@ export default function Form(){
     }
 
     const handleCountrySelect=(e)=>{
-        setInput({
-            ...input,
-            countryName:[...input.countryName, e.target.value]
-        })
-        setErrors(validate({
-            ...input,
-            countryName:[...input.countryName, e.target.value]
-        }))
+        if(!input.countryName.includes(e.target.value)){
+
+            setInput({
+                ...input,
+                countryName:[...input.countryName, e.target.value]
+            })
+            setErrors(validate({
+                ...input,
+                countryName:[...input.countryName, e.target.value]
+            }))
+        }else{
+            setInput({
+                ...input,
+                countryName:[...input.countryName]
+            })
+            setErrors(validate({
+                ...input,
+                countryName:[...input.countryName]
+            }))
+        }
     }
 
     const handleSubmit=(e)=>{
@@ -109,7 +121,16 @@ export default function Form(){
             countryName:[...input.countryName.filter(f=>f === e)]
         })
     }
-    console.log(input)
+
+    const deleteCountry =(e)=>{
+        e.preventDefault()
+        setInput({
+            ...input,
+            countryName:[...input.countryName.filter(f=>f !== e.target.value)]
+        })
+    }
+
+    //console.log(input)
 
   return (
       <div className='formContainer'>
@@ -121,8 +142,15 @@ export default function Form(){
     
         <form className='formForm'>
 
+            <div className='formTitles'>
+
             <h1 className='formTitle'>Create Activity</h1>
-            <p className="formsubTitle">*Please fill all the fields</p>
+            {success && (<p className='success'>{success} </p>)}
+
+            </div>
+
+            {/* <p className="formsubTitle">*Please fill all the fields</p> */}
+
 
          <div className='formNameContainer'>
             <label className= "labelTitle"> Name:
@@ -177,22 +205,25 @@ export default function Form(){
                             <option key={c.id} value={c.name}> {c.name} </option>
                             )}
                 </select>
+                {errors.countryName && (<p className='error'>{errors.countryName} </p>)}
+
             </label>
-        </div>
 
         <div>
             <h4>Selected Countries</h4>
-            <div className='selectedCountries'>
                 <button onClick={deleteCountries} className="formButton2" disabled={!input.countryName[0]}>Delete Selected Countries</button>
+            <div className='selectedCountries'>
                 {input.countryName?.map(c=>{
                     return(
-                        <div className='countriesForm' key={c.id}>
-                            <li  key={c.id}>{c}</li>
+                        <div className='countriesForm' value={c} key={c.id}>
+                            <li value={c}  key={c.id}>{c}</li>
+                            <button className='formX' value={c} onClick={deleteCountry}>X</button>
                         </div>
                     )})}
 
             </div>
         </div>
+                    </div>
             
             <div className="formButtons">
 
@@ -203,7 +234,6 @@ export default function Form(){
                 <button className="formButton" onClick={handleSubmitRefresh} type='submit' disabled={!input.name || !input.countryName || input.dificulty < 1 ||!input.dificulty > 5 || input.duration < 1 || input.duration >24 || !input.season}>Create and Create another One!</button>
             
             </div>
-             {success && (<p className='success'>{success} </p>)}
 
         </form>}
         <Footer/>

@@ -144,7 +144,6 @@ router.get("/continents", async(req, res)=>{
 })
 
 
-
 module.exports = router;
 
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {ReactReduxContext, useDispatch, useSelector} from "react-redux";
 import { NavLink } from 'react-router-dom';
 import { filterByActivity, filterByContinent, getActivities, getContinents, getCountries, sortByABC, sortByPopulation } from '../redux/actions';
 import Card from './Card';
@@ -9,6 +9,9 @@ import Title from './Title';
 import useLocalStorage from './useLocalStorage';
 import Return from './Return';
 import Footer from "./Footer"
+import { store } from '../redux/store';
+import { useReducer } from 'react';
+import rootReducer from '../redux/reducer';
 
 
 
@@ -32,6 +35,7 @@ export default function Home(){
         dispatch(getCountries())
         dispatch(getActivities())
         dispatch(getContinents())
+   
         
     },[dispatch])
 
@@ -39,9 +43,13 @@ export default function Home(){
 
     const countriesInPage= () =>{
         if(search.length === 0 && currentPage === 0) return allCountries.slice(currentPage, currentPage + 9)
+        let filteredCountries = allCountries.filter(c=>c.name.toLowerCase().includes(search.toLowerCase()))
         
-        const filteredCountries = allCountries.filter(c=>c.name.toLowerCase().includes(search.toLowerCase()))
+        if(currentPage === 0){
+            return filteredCountries.slice(currentPage, currentPage + 9)
+        }
         return filteredCountries.slice(currentPage, currentPage + 10)
+
     }
 
     const nextPage = ()=>{
@@ -70,21 +78,25 @@ export default function Home(){
         setCurrentPage(0)
     }
     
+    console.log()
 
-
-    const[order, setOrder] = useLocalStorage("order", "")
+    //const[order, setOrder] = useLocalStorage("order", "")
+    
+    
+    const[orderABC, setOrderABC] = useLocalStorage("orderABC", "")
 
     const handleOrderABC = (e)=>{
         dispatch(sortByABC(e.target.value))
-        setOrder(e.target.value)
+        setOrderABC(e.target.value)
         setCurrentPage(0)
     }
 
+    const[orderPopulation, setOrderPopulation] = useLocalStorage("orderPopulation", "")
 
 
     const handleOrderPopulation = (e)=>{
         dispatch(sortByPopulation(e.target.value))
-        setOrder(e.target.value)
+        setOrderPopulation(e.target.value)
         setCurrentPage(0)
     }
 
@@ -92,21 +104,23 @@ export default function Home(){
 
     //filters
 
-
-    const [filter, setFilter] = useLocalStorage("filter","")
+    //const [filter, setFilter] = useLocalStorage("filter","")
+    const [filterContinent, setFilterContinent] = useLocalStorage("filterContinent","")
 
 
     const handleContinentChange =(e)=>{
         dispatch(filterByContinent(e.target.value))
-        setFilter(e.target.value)
+        setFilterContinent(e.target.value)
         setCurrentPage(0)
     }
 
 
+    const [filterActivity, setFilterActivity] = useLocalStorage("filterActivity","")
+
 
     const handleActivityChange =(e)=>{
         dispatch(filterByActivity(e.target.value))
-        setFilter(e.target.value)
+        setFilterActivity(e.target.value)
         setCurrentPage(0)
     }
 
@@ -210,7 +224,13 @@ export default function Home(){
                     name={c.name}
                     flag={c.flag}
                     continent={c.continent}
-                    population={c.population}
+                    population={c.population? 
+                        c.population.toString().length ===10 ? `${c.population.toString()[0]}${c.population.toString()[1]}${c.population.toString()[2]}${c.population.toString()[3]}.${c.population.toString()[4]} Million`:
+                        c.population.toString().length ===9 ? `${c.population.toString()[0]}${c.population.toString()[1]}${c.population.toString()[2]}.${c.population.toString()[3]} Million`:
+                        c.population.toString().length ===8 ? `${c.population.toString()[0]}${c.population.toString()[1]}.${c.population.toString()[2]} Million`:
+                        c.population.toString().length ===7 ? `${c.population.toString()[0]}.${c.population.toString()[1]} Million`:
+                    c.population: 0}
+     
                     />
 
                     </NavLink>
