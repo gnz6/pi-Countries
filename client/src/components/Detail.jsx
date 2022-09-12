@@ -67,39 +67,57 @@ export default function Detail(){
         <div className='detailUpper'>
 
             <div className='detailSubregionContainer'>
-                <h4>Continent-Subregion</h4>
-                <h3 className='detailSubregion'> {country.continent} - ( {country.subregion})</h3>
+                <h4 clasname ="detailLabel">Continent-(Subregion)</h4>
+                <h3 className='detailSubregion'> {country.continent} ( {country.subregion})</h3>
             </div>
 
-            <div className='detailCapitalContainer'>
-                <h4>Country Capital</h4>
-                <h3 className='detailCapital'>{country.capital}</h3>
+            <div className='detailAreaContainer'>
+                <h4 clasname ="detailLabel">Area</h4>
+                <h3 className='detailArea'>
+                {country.area? 
+                        country.area.toString().length ===8 ? `${country.area.toString()[0]}${country.area.toString()[1]}.${country.area.toString()[2]} million `:
+                        country.area.toString().length ===7 ? `${country.area.toString()[0]}.${country.area.toString()[1]} million `:
+                        country.area.toString().length ===6 ? `${country.area.toString()[0]}${country.area.toString()[1]}${country.area.toString()[2]}.${country.area.toString()[3]}${country.area.toString()[4]}${country.area.toString()[5]} `:
+                        country.area.toString().length ===5 ? `${country.area.toString()[0]}${country.area.toString()[1]}.${country.area.toString()[2]}${country.area.toString()[3]}${country.area.toString()[4]} `:
+                        country.area.toString().length ===4 ? `${country.area.toString()[0]}.${country.area.toString()[1]}${country.area.toString()[2]}${country.area.toString()[3]} `:
+                        country.area.toString().length ===3 ? `${country.area} `:
+                        country.area.toString().length < 3 ? `${country.area} `:
+                    country.area: 0}
+                    
+                    
+                    
+                    
+                     km²</h3>
             </div>
-
+          
         </div>
 
         <div className='detailUnder'>
 
-            <div className='detailAreaContainer'>
-                <h4>Area</h4>
-                <h3 className='detailArea'>{country.area} km²</h3>
+          
+
+
+            <div className='detailCapitalContainer'>
+                <h4 clasname ="detailLabel">Country Capital</h4>
+                <h3 className='detailCapital'>{country.capital}</h3>
             </div>
 
+
             <div className='detailPopulationContainer'>
-                <h4>Population</h4>
+                <h4 clasname ="detailLabel">Population</h4>
                 <div className='popContainer'>
 
                 <h3 className='detailPopulation'> 
                 {country.population? 
-                        country.population.toString().length ===10 ? `${country.population.toString()[0]}${country.population.toString()[1]}${country.population.toString()[2]}${country.population.toString()[3]}.${country.population.toString()[4]} Million`:
-                        country.population.toString().length ===9 ? `${country.population.toString()[0]}${country.population.toString()[1]}${country.population.toString()[2]}.${country.population.toString()[3]} Million`:
-                        country.population.toString().length ===8 ? `${country.population.toString()[0]}${country.population.toString()[1]}.${country.population.toString()[2]} Million`:
-                        country.population.toString().length ===7 ? `${country.population.toString()[0]}.${country.population.toString()[1]} Million`:
-                        country.population.toString().length ===6 ? `${country.population.toString()[0]}${country.population.toString()[1]}${country.population.toString()[2]}.${country.population.toString()[3]}${country.population.toString()[4]}${country.population.toString()[5]} Thousand`:
-                        country.population.toString().length ===5 ? `${country.population.toString()[0]}${country.population.toString()[1]}.${country.population.toString()[2]}${country.population.toString()[3]}${country.population.toString()[4]} Thousand`:
-                        country.population.toString().length ===4 ? `${country.population.toString()[0]}.${country.population.toString()[1]}${country.population.toString()[2]}${country.population.toString()[3]} Thousand`:
-                        country.population.toString().length ===3 ? `${country.population} Hundred`:
-                        country.population.toString().length < 3 ? `${country.population} Habitants`:
+                        country.population.toString().length ===10 ? `${country.population.toString()[0]}${country.population.toString()[1]}${country.population.toString()[2]}${country.population.toString()[3]}.${country.population.toString()[4]} million`:
+                        country.population.toString().length ===9 ? `${country.population.toString()[0]}${country.population.toString()[1]}${country.population.toString()[2]}.${country.population.toString()[3]} million`:
+                        country.population.toString().length ===8 ? `${country.population.toString()[0]}${country.population.toString()[1]}.${country.population.toString()[2]} million`:
+                        country.population.toString().length ===7 ? `${country.population.toString()[0]}.${country.population.toString()[1]} million`:
+                        country.population.toString().length ===6 ? `${country.population.toString()[0]}${country.population.toString()[1]}${country.population.toString()[2]}.${country.population.toString()[3]}${country.population.toString()[4]}${country.population.toString()[5]} thousand`:
+                        country.population.toString().length ===5 ? `${country.population.toString()[0]}${country.population.toString()[1]}.${country.population.toString()[2]}${country.population.toString()[3]}${country.population.toString()[4]} thousand`:
+                        country.population.toString().length ===4 ? `${country.population.toString()[0]}.${country.population.toString()[1]}${country.population.toString()[2]}${country.population.toString()[3]} thousand`:
+                        country.population.toString().length ===3 ? `${country.population} hundred`:
+                        country.population.toString().length < 3 ? `${country.population} habitants`:
                     country.population: `No population registered`}
                 </h3>
              

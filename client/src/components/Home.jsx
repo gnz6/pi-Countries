@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ReactReduxContext, useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { NavLink } from 'react-router-dom';
 import { filterByActivity, filterByContinent, getActivities, getContinents, getCountries, sortByABC, sortByPopulation } from '../redux/actions';
 import Card from './Card';
@@ -9,9 +9,7 @@ import Title from './Title';
 import useLocalStorage from './useLocalStorage';
 import Return from './Return';
 import Footer from "./Footer"
-import { store } from '../redux/store';
-import { useReducer } from 'react';
-import rootReducer from '../redux/reducer';
+
 
 
 
@@ -70,6 +68,10 @@ export default function Home(){
         e.preventDefault();
         dispatch(getCountries())
         setSearch("")
+        setOrderPopulation("")
+        setOrderABC("")
+        setFilterActivity("all")
+        setFilterContinent("all")
         setCurrentPage(0)
     }
 
@@ -78,7 +80,6 @@ export default function Home(){
         setCurrentPage(0)
     }
     
-    console.log()
 
     //const[order, setOrder] = useLocalStorage("order", "")
     
@@ -88,6 +89,7 @@ export default function Home(){
     const handleOrderABC = (e)=>{
         dispatch(sortByABC(e.target.value))
         setOrderABC(e.target.value)
+        setOrderPopulation("")
         setCurrentPage(0)
     }
 
@@ -97,9 +99,9 @@ export default function Home(){
     const handleOrderPopulation = (e)=>{
         dispatch(sortByPopulation(e.target.value))
         setOrderPopulation(e.target.value)
+        setOrderABC("")
         setCurrentPage(0)
     }
-
 
 
     //filters
@@ -111,6 +113,7 @@ export default function Home(){
     const handleContinentChange =(e)=>{
         dispatch(filterByContinent(e.target.value))
         setFilterContinent(e.target.value)
+        setFilterActivity("all")
         setCurrentPage(0)
     }
 
@@ -121,6 +124,7 @@ export default function Home(){
     const handleActivityChange =(e)=>{
         dispatch(filterByActivity(e.target.value))
         setFilterActivity(e.target.value)
+        setFilterContinent("all")
         setCurrentPage(0)
     }
 
@@ -138,7 +142,7 @@ export default function Home(){
         <div className='orderContainer'>
             <h3>Order By</h3>
        
-                <label>Alphabet:
+            <label>Alphabet:
                     <select className="homeSelect" name='order' defaultValue={""} onChange={handleOrderABC}>
                         <option value={""} >ABC</option>
                         <option value= "des">  A-Z  ↓↑</option>
@@ -146,6 +150,8 @@ export default function Home(){
                     </select>
                 </label>
 
+
+           
 
             <label>Population:
                 <select className="homeSelect" name='population' defaultValue={""} onChange={handleOrderPopulation}>
@@ -166,8 +172,6 @@ export default function Home(){
            )} 
         </select>
     </label> 
-
-    
 
    
     <label> Activities:

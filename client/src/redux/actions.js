@@ -73,6 +73,7 @@ export function filterByActivity(payload){
 }
 
 
+
 export function sortByPopulation(payload){
     return {
         type:"SORT_BY_POPULATION",
@@ -87,3 +88,4 @@ export function sortByABC(payload){
         payload
     }
 }
+
