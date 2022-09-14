@@ -139,7 +139,7 @@ export default function Form(){
     <Loader/>
     :
 
-    
+    <div className='formAll'>
         <form className='formForm'>
 
             <div className='formTitles'>
@@ -235,7 +235,10 @@ export default function Form(){
             
             </div>
 
-        </form>}
+        </form>
+        </div>
+        }
+
         <Footer/>
     </div>
   )

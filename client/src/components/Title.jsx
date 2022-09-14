@@ -10,6 +10,7 @@ export default function Title() {
         <img className='titleImg' src='https://pngpress.com/wp-content/uploads/2020/08/uploads_compass_compass_PNG25585.png' alt='logo'/>
         <h1 className='titleText'> beWiki</h1>
 
+
       </NavLink>
     </div>
   )

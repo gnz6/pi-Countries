@@ -5,7 +5,6 @@ import { filterByActivity, filterByContinent, getActivities, getContinents, getC
 import Card from './Card';
 import Loader from './Loader';
 import ".././styles.css"
-import Title from './Title';
 import useLocalStorage from './useLocalStorage';
 import Return from './Return';
 import Footer from "./Footer"
@@ -33,7 +32,7 @@ export default function Home(){
         dispatch(getCountries())
         dispatch(getActivities())
         dispatch(getContinents())
-   
+       
         
     },[dispatch])
 
@@ -81,7 +80,6 @@ export default function Home(){
     }
     
 
-    //const[order, setOrder] = useLocalStorage("order", "")
     
     
     const[orderABC, setOrderABC] = useLocalStorage("orderABC", "")
@@ -106,7 +104,6 @@ export default function Home(){
 
     //filters
 
-    //const [filter, setFilter] = useLocalStorage("filter","")
     const [filterContinent, setFilterContinent] = useLocalStorage("filterContinent","")
 
 
@@ -132,17 +129,35 @@ export default function Home(){
 
 
   return (
-    <div className='homeContainer'>
-        <Title/>
+<div className='homeContainer'>
+    <div className='homeNav'>
+    <div className='titleContainer'>
+      <NavLink to="/home" className="navTitle">
 
+        <h1 className='titleText'>G </h1>
+        <img className='titleImg' src='https://pngpress.com/wp-content/uploads/2020/08/uploads_compass_compass_PNG25585.png' alt='logo'/>
+        <h1 className='titleText'> !</h1>
+        <p className='titlesubText'>GlobeWiki</p>
+      </NavLink>
+<div className='sbContainer'>
+            <input className='sb' onChange={handleSearch} placeholder="Search Countries..."/>
+        </div>  
+    </div>
     <div className='allBarsContainer'>
+        
+
+        <div className='arrows'>
+                    <button className='navPagingButton' onClick={prevPage} disabled={currentPage <= 0}> ← </button>
+            <button className='numButton'>{currentPage === 0 ? 0: currentPage.toString().length === 2? currentPage.toString()[0]: currentPage.toString()[0]+currentPage.toString()[1]}</button>
+                    <button className='navPagingButton' onClick={nextPage}> → </button>
+                </div>
 
     <div className='orderFilter'>
 
         <div className='orderContainer'>
-            <h3>Order By</h3>
        
-            <label>Alphabet:
+            <label classname="homeLabel">
+            <h3>Order By</h3>
                     <select className="homeSelect" name='order' defaultValue={""} onChange={handleOrderABC}>
                         <option value={""} >ABC</option>
                         <option value= "des">  A-Z  ↓↑</option>
@@ -153,7 +168,7 @@ export default function Home(){
 
            
 
-            <label>Population:
+            <label classname="homeLabel">
                 <select className="homeSelect" name='population' defaultValue={""} onChange={handleOrderPopulation}>
                     <option value={""} >Population</option>
                     <option value = "high"> More Populated </option>
@@ -163,10 +178,10 @@ export default function Home(){
         </div>
        
         <div className='filterContainer'>
+        <label classname="homeLabel"> 
         <h3>Filter By</h3>
-        <label> Continent:
         <select className="homeSelect" name='continent' defaultValue={"all"} onChange={handleContinentChange}>
-            <option value="all" >Anywhere</option>
+            <option value="all" >Continent</option>
             {allContinents.map(c=> 
                <option key={c} value={c} name="continent">{c}</option>
            )} 
@@ -174,9 +189,9 @@ export default function Home(){
     </label> 
 
    
-    <label> Activities:
+    <label classname="homeLabel"> 
         <select className="homeSelect" name='activities' defaultValue={"all"} onChange={handleActivityChange}>
-            <option value="all" >Anywhere</option>
+            <option value="all" >Activity Type</option>
             {allActivities.map(a=> 
                <option key={a.id} value={a.name} name="continent">{a.name}</option>
            )} 
@@ -186,23 +201,21 @@ export default function Home(){
 
         
 </div> 
-        
-
-        <div className='pagingContainer'>
-            <button className='pagingButton' onClick={prevPage} disabled={currentPage <= 0}> ← Previous Page</button>
-            <button className='pagingButton' onClick={handleClick}>Reload Countries ↺ </button>
-            <NavLink to={"/createActivity"}><button className='pagingButton'>Create Activity</button></NavLink>
-            <button className='pagingButton' onClick={nextPage}>Next Page → </button>
-        </div>
-
-    </div>
-
 
       
 
-        <div className='sbContainer'>
-            <input className='sb' onChange={handleSearch} placeholder="Search Countries..."/>
+        <div className='pagingContainerBar'>
+            <NavLink to={"/createActivity"}><button className='pagingButtonBar'>Create Activity</button></NavLink>
+            <button className='pagingButtonBar' onClick={handleClick}>Refresh Countries ↺ </button>
         </div>
+
+           
+    </div>
+
+    <Footer/>
+    </div>
+      
+
 
 
     <div className='cardsContainer'>
@@ -243,18 +256,17 @@ export default function Home(){
             )
         })
     }
-
-
-    </div>
-
     <div className='pagingContainer'>
     <button className='pagingButton' onClick={prevPage}> ← Previous Page</button>
-    <h3 className='numButton'>{currentPage === 0 ? 0: currentPage.toString().length === 2? currentPage.toString()[0]: currentPage.toString()[0]+currentPage.toString()[1]}</h3>
+    <button className='numButton'>{currentPage === 0 ? 0: currentPage.toString().length === 2? currentPage.toString()[0]: currentPage.toString()[0]+currentPage.toString()[1]}</button>
     <button className='pagingButton' onClick={nextPage}>Next Page → </button>
 
-    </div>
+    </div> 
 
-    <Footer/>
+    </div>
+ 
+
+
 
     </div>
   )
