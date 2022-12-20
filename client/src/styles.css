@@ -126,6 +126,7 @@ body{
 .navTitle{
     text-decoration: none;
     background-color:rgba(145, 2, 2, 0.829);
+    
     display: flex;
     width: 100%;
     margin: 0 auto;
@@ -293,6 +294,13 @@ option{
     cursor: pointer;
 }
 
+.pagingButtonBar:active{
+    color: rgba(251, 176, 0, 0.861);
+    background-color: #333;
+    transition: 200ms;
+    cursor: pointer;
+}
+
 
 
 .numButton{
@@ -370,10 +378,28 @@ option{
 .sbContainer{
     height: 35px;
     width: 100%;
+    display: flex;
+    border: 1px solid black;
+}
+.sbButton{
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    font-weight: bold;
+    font-size: 15px;
+    background-color: #000;
+    color: #aaa;
+}
+
+.sbButton:hover{
+    color: rgb(214,164,89);
+    cursor: pointer;
+    transition: 200ms;
 }
 
 .sb{
-    width: 97%;
+    width: 90%;
     height: 30px;
     text-align: center;
     font-size: 20px;
@@ -397,6 +423,7 @@ option{
 }
 
 
+
 .cardsContainer{
     display: flex;
     flex-wrap: wrap;
@@ -406,9 +433,23 @@ option{
     grid-column-start: 1 ;
     grid-column-end: 3 ;
     background-color: rgba(0, 0, 0, 0.4);
-    margin: auto 269.5px;
+    margin: auto 269.5px ;
     width: 105%;
-    height: 99vh;
+    height: 100%;
+    padding: 25px 0;
+}
+
+
+.cardsContainer2{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px ;
+    grid-column-start: 1 ;
+    grid-column-end: 3 ;
+    height: 85vh;
+    margin: 20px auto;
 }
 
 
